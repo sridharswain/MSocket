@@ -14,7 +14,8 @@ public class server
     public void onAccept(MSocket mSocket){
         //ON CONNECTED TO A CLIENT
         mSocket.beginReceive();
-        mSocket.beginAccept(); //START LISTENING FOR MORE CLIENTS
+        MSocket newSocket =  new MSocket(3000, socketCallbacks); //LISTEN TO OTHER CLIENTS
+        newSocket.beginAccept();
     }
 
     @Override
