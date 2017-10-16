@@ -14,6 +14,7 @@ class MSocket{
       this.socketCallbacks = socketCallbacks;
     }
     catch(IOException e){
+      isConnected=false;
       socketCallbacks.onClose(MSocket.this);
     }
   }
@@ -25,6 +26,7 @@ class MSocket{
 
   public void connect(){
     try{
+      isConnected=true;
       OutputStream ostream = cSocket.getOutputStream();
       writer = new PrintWriter(ostream, true);
       InputStream istream = cSocket.getInputStream();
@@ -32,10 +34,11 @@ class MSocket{
       socketCallbacks.onAccept(MSocket.this);
     }
     catch(IOException e){
+      isConnected=false;
       socketCallbacks.onClose(MSocket.this);
     }
   }
-  
+
   public void beginAccept(){
     Thread acceptThread = new Thread(){
       @Override
@@ -50,6 +53,7 @@ class MSocket{
           socketCallbacks.onAccept(MSocket.this);
         }
         catch(IOException e){
+          isConnected=false;
           socketCallbacks.onClose(MSocket.this);
         }
       }
@@ -58,12 +62,11 @@ class MSocket{
   }
 
   public void beginReceive(){
-    Thread recieveThread = new Thread(){
+    Thread recieveThread = new Thread(new Runnable(){
       @Override
       public void run(){
         String receiveMessage;
-        while(true)
-        {
+        while(true){
           try{
             if((receiveMessage = reader.readLine()) != null)
             {
@@ -71,11 +74,12 @@ class MSocket{
             }
           }
           catch(Exception e){
+            isConnected=false;
             socketCallbacks.onClose(MSocket.this);
           }
         }
       }
-    };
+    });
     recieveThread.start();
   }
 
