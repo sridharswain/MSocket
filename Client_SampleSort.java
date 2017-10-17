@@ -21,8 +21,8 @@ class Client_SampleSort{
       for(int i=0;i<rawNums.length;i++){
         arr[i] = Integer.parseInt(rawNums[i]);
       }
-      arr=Algorithm_sample_sort.drive_sampe_sort(arr);
-      String toSend = message.charAt(0)+"|";
+      arr=Algorithm_sample_sort.drive_sample_sort(arr);
+      String toSend="" ;//= message.charAt(0)+"|";
       for(int num : arr){
         toSend=toSend+num+",";
       }
