@@ -29,4 +29,16 @@ class Algorithm_sample_sort
     return i+1;
 }
 
+
+void sort(int arr[], int low, int high)
+    {
+        if (low < high)
+        {
+
+            int pi = partition(arr, low, high);
+            sort(arr, low, pi-1);
+            sort(arr, pi+1, high);
+        }
+    }
+
 }
