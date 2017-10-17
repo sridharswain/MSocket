@@ -68,7 +68,7 @@ class bitionicSort_Server{
 
     @Override
     public void onReceive(MSocket mSocket, String message){
-      System.out.println("Received a part of sorted array from a client : "message);
+      System.out.println("Received a part of sorted array from a client : "+message);
       String[] rawNums = message.substring(2,message.length()-1).split(",");
       if(message.charAt(0)=='1'){
         for(int i=0;i<arr.length/2;i++) sortedArr[i]= Integer.parseInt(rawNums[i]);
