@@ -6,7 +6,7 @@ class Algorithm_sample_sort
 
   }
 
-  int partition(int arr[], int low, int high)
+  static int partition(int arr[], int low, int high)
 {
     int pivot = arr[high];
     int i = (low-1);
@@ -30,7 +30,7 @@ class Algorithm_sample_sort
 }
 
 
-void sort(int arr[], int low, int high)
+static void sort(int arr[], int low, int high)
     {
         if (low < high)
         {
