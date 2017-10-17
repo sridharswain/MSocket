@@ -2,14 +2,13 @@ import java.util.*;
 class Algorithm_sample_sort
 {
   static int arr[];
-  static int[] drive_sample_sort(int[] a)
+  public static int[] drive_sample_sort(int[] a)
   {
     arr=a;
-
     sort(arr,0,arr.length-1);
     return arr;
   }
-  static int partition(int arr[], int low, int high)
+  private static int partition(int arr[], int low, int high)
 {
     int pivot = arr[high];
     int i = (low-1);
@@ -33,7 +32,7 @@ class Algorithm_sample_sort
 }
 
 
-static void sort(int arr[], int low, int high)
+private static void sort(int arr[], int low, int high)
     {
         if (low < high)
         {
