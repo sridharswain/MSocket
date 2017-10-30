@@ -1,19 +1,17 @@
 import java.io.*;
 import java.util.*;
 
-class bitionicSort_Server{
+class Merge_Server{
   static ArrayList<MSocket> clients;
   static int numOfClients=0;
   static int recivedFrom = 0;
-  static int arr[] = {3, 7, 4, 8, 6, 2, 1, 5, 12, 10, 11, 15, 13, 2, 14, 9};
+  static int arr[] = {10,3,1,6,4,5,2,21,34,14,7,9,30,2};
   //MAIN
   static int sortedArr[] = new int[arr.length];
   public static void main(String[] args) throws IOException{
 
     clients = new ArrayList<MSocket>();
 
-    Algorithm.sort(arr);
-    for(int num : arr) System.out.print(num+" ");
     System.out.print("Enter the number of clients to come online for sorting : ");
     BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
     numOfClients = Integer.parseInt(inputReader.readLine());
@@ -42,9 +40,9 @@ class bitionicSort_Server{
       }
       System.out.println("Client-"+(i+1)+" is sorting "+messageToSend);
       if(i==0)
-        clients.get(i).beginSend("1|"+messageToSend);
+        clients.get(i).beginSend(messageToSend);
       else
-        clients.get(i).beginSend("0|"+messageToSend);
+        clients.get(i).beginSend(messageToSend);
     }
   }
 
@@ -71,17 +69,17 @@ class bitionicSort_Server{
     @Override
     public void onReceive(MSocket mSocket, String message){
       System.out.println("Received a part of sorted array from a client : "+message);
-      String[] rawNums = message.substring(2,message.length()-1).split(",");
-      if(message.charAt(0)=='1'){
+      String[] rawNums = message.substring(0,message.length()-1).split(",");
+      if(recivedFrom==0){
         for(int i=0;i<arr.length/2;i++) sortedArr[i]= Integer.parseInt(rawNums[i]);
         recivedFrom++;
       }
       else{
-        recivedFrom++;
         for(int i=arr.length/2;i<arr.length;i++) sortedArr[i]= Integer.parseInt(rawNums[i-arr.length/2]);
+        recivedFrom++;
       }
       if(recivedFrom==numOfClients){
-        Algorithm.bitonicMerge(sortedArr,0,sortedArr.length,1);
+        MergeSort.merge(sortedArr,0,(sortedArr.length-1)/2,sortedArr.length-1);
         System.out.print("Sorted Array : ");
         for(int num : sortedArr) System.out.print(num+" ");
         System.out.println();

@@ -35,6 +35,7 @@ class MSocket{
     }
     catch(IOException e){
       isConnected=false;
+      System.out.println("connect"+e.getMessage());
       socketCallbacks.onClose(MSocket.this);
     }
   }
@@ -54,6 +55,7 @@ class MSocket{
         }
         catch(IOException e){
           isConnected=false;
+          System.out.println("accept"+e.getMessage());
           socketCallbacks.onClose(MSocket.this);
         }
       }
@@ -74,6 +76,8 @@ class MSocket{
             }
           }
           catch(Exception e){
+            System.out.println("receive");
+            e.printStackTrace(System.out);
             isConnected=false;
             socketCallbacks.onClose(MSocket.this);
           }
